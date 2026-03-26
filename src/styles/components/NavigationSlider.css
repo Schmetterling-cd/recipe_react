@@ -1,0 +1,17 @@
+/* Базовые стили для развёрнутого состояния */
+.h-100.bg-dark {
+    transition: width 0.3s ease;
+    overflow: visible; /* контент виден */
+}
+
+/* Стили для свёрнутого состояния */
+.h-100.bg-dark.collapsed {
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden;
+}
+
+/* Явно указываем класс для развёрнутого состояния */
+.h-100.bg-dark.expanded {
+    width: var(--slider-width) !important; /* добавил явную ширину */
+}

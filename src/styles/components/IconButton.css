@@ -1,0 +1,11 @@
+.bseu-icon:not(:disabled) {
+    cursor: pointer;
+}
+
+.bseu-icon i {
+    transition: color 0.2s ease;
+}
+
+.bseu-icon:not(:disabled):hover i {
+    color: var(--main-system-color) !important;
+}
