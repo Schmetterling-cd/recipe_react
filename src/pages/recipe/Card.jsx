@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import image from '../../assets/images/cooking-book.png';
 import EditableTable from '../../components/EditableTable.jsx';
-import MainButton from '../../components/MainButton.jsx';
-import TableControlPanel from '../../components/TableControlPanel.jsx';
+import PageComponentLayout from '../../layouts/PageComponentLayout.jsx';
 
 const RecipeCard = () => {
     const headers = [
@@ -23,13 +22,13 @@ const RecipeCard = () => {
             },
             {
                 name: 'count',
-                isSortable: true,
+                isSortable: false,
                 label: 'Кол-во',
                 isAction: false,
             },
             {
                 name: 'countSize',
-                isSortable: true,
+                isSortable: false,
                 label: 'Единица измерения',
                 isAction: false,
             },
@@ -94,6 +93,36 @@ const RecipeCard = () => {
         );
     };
 
+    const [tableFilters, setTableFilters] = useState({
+        searchQuery: '',
+    });
+
+    const updateFilterSetiings = (action, field) => {
+        switch (true) {
+            case action === 'sort':
+                setTableFilters(prev => {
+                    return prev.sortField === field
+                        ? { ...prev, sortDirection: prev.sortDirection === 'asc' ? 'desc' : 'asc' }
+                        : { ...prev, sortField: field, sortDirection: 'asc' }
+                        ;
+                });
+                break;
+            case action === 'search':
+                setTableFilters(prev => ({ ...prev, searchQuery: field }));
+                break;
+            default:
+                break;
+        };
+    }
+
+    const tableActions = [
+        {
+            action: () => { console.log('test'); },
+            label: 'Add',
+            icon: 'plus-circle-fill',
+            type: 'main',
+        },
+    ];
 
     return (
         <div className="w-100 d-flex flex-column align-items-start justify-content-center">
@@ -104,20 +133,17 @@ const RecipeCard = () => {
                     <p className='mb-0'>Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта.  Краткое описание рецепта.  Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта. Краткое описание рецепта.</p>
                 </div>
             </div>
-
-            <EditableTable
-                headers={headers}
-                tableData={tableData}
-                actions={actions}
-                onFieldUpdate={updateField}
-            />
-            <TableControlPanel>
-                <MainButton
-                    action={() => { console.log('test'); }}
-                    label={'Add'}
-                    icon={'plus-circle-fill'}
+            <PageComponentLayout>
+                <EditableTable
+                    headers={headers}
+                    tableData={tableData}
+                    rowAction={actions}
+                    onFieldUpdate={updateField}
+                    filterSettings={tableFilters}
+                    updateFilterSetiings={updateFilterSetiings}
+                    tableActions={tableActions}
                 />
-            </TableControlPanel>
+            </PageComponentLayout>
         </div>
     );
 };

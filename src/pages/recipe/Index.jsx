@@ -63,14 +63,32 @@ const RecipeIndex = () => {
         }
     ];
 
-    const updateFilterSetiings = (field) => {
-        setTableFilters(prev => {
-            return prev.sortField === field
-                ? { ...prev, sortDirection: prev.sortDirection === 'asc' ? 'desc' : 'asc' }
-                : { ...prev, sortField: field, sortDirection: 'asc' }
-            ;
-        });
+    const updateFilterSetiings = (action, field) => {
+        switch (true) {
+            case action === 'sort':
+                setTableFilters(prev => {
+                    return prev.sortField === field
+                        ? { ...prev, sortDirection: prev.sortDirection === 'asc' ? 'desc' : 'asc' }
+                        : { ...prev, sortField: field, sortDirection: 'asc' }
+                    ;
+                });
+                break;
+            case action === 'search':
+                setTableFilters(prev => ({ ...prev, searchQuery: field }));
+                break;
+            default:
+                break;
+        };
     }
+
+    const tableActions = [
+        {
+            action: () => { console.log('test'); },
+            label: 'Add',
+            icon: 'plus-circle-fill',
+            type: 'main',
+        },
+    ];
 
     return (
         <Table
@@ -78,7 +96,8 @@ const RecipeIndex = () => {
             tableData={tableData}
             filterSettings={tableFilters}
             updateFilterSetiings={updateFilterSetiings}
-            actions={actions}
+            rowActions={actions}
+            tableActions={tableActions}
         />
     );
 };

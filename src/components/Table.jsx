@@ -6,14 +6,15 @@ const Table = ({
     tableData,
     filterSettings = null,
     updateFilterSetiings = null,
-    actions = [],
+    rowActions = [],
+    tableActions = [],
 }) => {
     const hasAction = (actionName) => {
-        return actions.some(action => action.name === actionName);
+        return rowActions.some(action => action.name === actionName);
     };
 
     const getActionByName = (actionName) => {
-        return actions.find(action => action.name === actionName);
+        return rowActions.find(action => action.name === actionName);
     };
 
     const getField = (row, column) => {
@@ -33,6 +34,7 @@ const Table = ({
             headers={headers}
             filterSettings={filterSettings}
             updateFilterSetiings={updateFilterSetiings}
+            tableActions={tableActions}
         >
             {
                 tableData.map(row => {

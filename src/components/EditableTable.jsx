@@ -2,20 +2,21 @@ import IconButton from '../components/IconButton.jsx';
 import TableLayout from '../layouts/TableLayout.jsx';
 import Input from './Input.jsx';
 
-const Table = ({
+const EditableTable = ({
     headers,
     tableData,
     filterSettings = null,
     updateFilterSetiings = null,
-    actions = [],
-    onFieldUpdate = null
+    rowAction = [],
+    onFieldUpdate = null,
+    tableActions = [],
 }) => {
     const hasAction = (actionName) => {
-        return actions.some(action => action.name === actionName);
+        return rowAction.some(action => action.name === actionName);
     };
 
     const getActionByName = (actionName) => {
-        return actions.find(action => action.name === actionName);
+        return rowAction.find(action => action.name === actionName);
     };
 
     const handleInputChange = (rowId, columnName, event) => {
@@ -69,6 +70,7 @@ const Table = ({
             headers={headers}
             filterSettings={filterSettings}
             updateFilterSetiings={updateFilterSetiings}
+            tableActions={tableActions}
         >
             {
                 tableData.map(row => {
@@ -98,4 +100,4 @@ const Table = ({
     );
 };
 
-export default Table;
+export default EditableTable;
